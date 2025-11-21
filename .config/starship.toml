@@ -126,6 +126,7 @@ format = '[[ $symbol( $version) ](fg:crust bg:sapphire)]($style)'
 symbol = ""
 style = "bg:sapphire"
 format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:sapphire)]($style)'
+version_format = "${major}.${minor}"
 
 [docker_context]
 symbol = ""
