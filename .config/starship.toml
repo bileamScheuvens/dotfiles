@@ -3,6 +3,7 @@
 format = """
 [](peach)\
 $os\
+$nix_shell\
 [](fg:peach bg:yellow)\
 $directory\
 [](fg:yellow bg:green)\
@@ -26,6 +27,12 @@ $line_break\
 $character"""
 
 palette = 'catppuccin_mocha'
+
+[nix_shell]
+disabled = false
+format = '[$state()]($style)'
+impure_msg = "nix-shell"
+style = "bg:peach fg:crust"
 
 [os]
 disabled = false
