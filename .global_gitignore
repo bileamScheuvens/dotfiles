@@ -1,6 +1,8 @@
 # secrets & confs
 .env
 .envrc
+.direnv
+
 
 # build artifacts
 __pycache__/
