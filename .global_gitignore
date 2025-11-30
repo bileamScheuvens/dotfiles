@@ -1,0 +1,14 @@
+# secrets & confs
+.env
+.envrc
+
+# build artifacts
+__pycache__/
+*.pyc
+
+# data
+*.csv
+*.tsv
+*.arrow
+
+
