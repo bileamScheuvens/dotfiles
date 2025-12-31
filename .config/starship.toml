@@ -81,7 +81,7 @@ truncation_symbol = "…/"
 "code" = "󰲋 "
 
 [git_branch]
-symbol = ""
+symbol = ""
 style = "bg:green"
 format = '[[ $symbol $branch ](fg:crust bg:green)]($style)'
 
@@ -150,7 +150,7 @@ ignore_base = false
 disabled = false
 time_format = "%R"
 style = "bg:lavender"
-format = '[[  $time ](fg:crust bg:lavender)]($style)'
+format = '[[  $time ](fg:crust bg:lavender)]($style)'
 
 [line_break]
 disabled = false
