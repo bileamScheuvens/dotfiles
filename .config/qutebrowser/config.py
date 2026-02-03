@@ -5,8 +5,7 @@ config = config  # noqa
 
 # colorscheme
 catpuccin.setup(c, "mocha", False)
-# c.colors.webpage.darkmode.enabled = True
-c.colors.webpage.preferred_color_scheme = "dark"
+c.colors.webpage.darkmode.enabled = True
 
 
 c.url.searchengines = {
@@ -17,11 +16,33 @@ c.url.searchengines = {
     "!nx": "https://search.nixos.org/packages?channel=unstable&query={}",
 }
 
-# keybinds
+# insert mode bindings
+c.bindings.commands = {
+    "insert": {
+        "<Ctrl-f>": "fake-key <Right>",
+        "<Ctrl-b>": "fake-key <Left>",
+        "<Ctrl-a>": "fake-key <Home>",
+        "<Ctrl-e>": "fake-key <End>",
+        "<Ctrl-n>": "fake-key <Down>",
+        "<Ctrl-p>": "fake-key <Up>",
+        "<Alt-v>": "fake-key <PgUp>",
+        "<Ctrl-v>": "fake-key <PgDown>",
+        "<Alt-f>": "fake-key <Ctrl-Right>",
+        "<Alt-b>": "fake-key <Ctrl-Left>",
+        "<Ctrl-d>": "fake-key <Delete>",
+        "<Alt-d>": "fake-key <Ctrl-Delete>",
+        "<Alt-Backspace>": "fake-key <Ctrl-Backspace>",
+        "<Ctrl-w>": "fake-key <Ctrl-Backspace>",
+        "<Ctrl-y>": "insert-text {primary}",
+    }
+}
+
+# other keybinds
 config.bind("=", "cmd-set-text -s :open")
 config.bind("h", "history")
 config.bind("cs", "cmd-set-text -s :config-source")
 config.bind("T", "hint links tab")
+config.bind("td", "config-cycle colors.webpage.darkmode.enabled true false")
 config.bind("pp", "open -- {clipboard}")
 config.bind("pt", "open -t -- {clipboard}")
 config.bind("tT", "config-cycle tabs.position top left")
@@ -30,13 +51,13 @@ config.bind("gK", "tab-move -")
 config.bind("\\", "config-cycle tabs.show always switching")
 config.bind("|", "config-cycle tabs.show always switching")
 
-
 # configure tabs
 c.tabs.indicator.width = 0
 c.tabs.padding = {"bottom": 3, "top": 3, "left": 0, "right": 0}
 c.tabs.position = "right"
 c.tabs.width = "15%"
 c.tabs.show = "switching"
+c.tabs.show_switching_delay = 1500
 c.fonts.tabs.selected = "10pt"
 c.fonts.tabs.unselected = "8pt"
 
