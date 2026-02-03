@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p python3Packages.tldextract
 
 # SPDX-FileCopyrightText: Chris Braun (cryzed) <cryzed@googlemail.com>
 #
@@ -49,13 +50,13 @@ argument_parser.add_argument("url", nargs="?", default=os.getenv("QUTE_URL"))
 argument_parser.add_argument(
     "--dmenu-invocation",
     "-d",
-    default="rofi -dmenu -i -p Bitwarden",
+    default="fuzzel --dmenu -i -p Bitwarden",
     help="Invocation used to execute a dmenu-provider",
 )
 argument_parser.add_argument(
     "--password-prompt-invocation",
     "-p",
-    default='rofi -dmenu -p "Master Password" -password -lines 0',
+    default='fuzzel --dmenu -p "Master Password: " --password --lines 0 -w 40',
     help="Invocation used to prompt the user for their Bitwarden password",
 )
 argument_parser.add_argument(
@@ -83,7 +84,7 @@ argument_parser.add_argument(
 argument_parser.add_argument(
     "--auto-lock",
     type=int,
-    default=900,
+    default=3600,
     help="Automatically lock the vault after this many seconds",
 )
 group = argument_parser.add_mutually_exclusive_group()
@@ -147,7 +148,7 @@ def get_session_key(auto_lock, password_prompt_invocation):
             if not session:
                 raise Exception("Could not unlock vault")
             key_id = subprocess.check_output(
-                ["keyctl", "add", "user", "bw_session", session, "@u"],
+                ["keyctl", "add", "user", "bw_session", session, "@s"],
                 text=True,
             ).strip()
 
@@ -161,6 +162,8 @@ def get_session_key(auto_lock, password_prompt_invocation):
 
 def pass_(domain, encoding, auto_lock, password_prompt_invocation):
     session_key = get_session_key(auto_lock, password_prompt_invocation)
+
+    # TODO rewrite with rbw. Does not bother with encryption and bring retrieval time from 3sec to ~0.2sec
     process = subprocess.run(
         [
             "bw",
@@ -174,7 +177,6 @@ def pass_(domain, encoding, auto_lock, password_prompt_invocation):
         ],
         capture_output=True,
     )
-
     err = process.stderr.decode(encoding).strip()
     if err:
         msg = "Bitwarden CLI returned for {:s} - {:s}".format(domain, err)
@@ -255,6 +257,7 @@ def main(arguments):
     # the registered domain name and finally: the IPv4 address if that's what
     # the URL represents
     candidates = []
+
     for target in filter(
         None,
         [
