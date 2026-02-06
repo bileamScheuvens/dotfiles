@@ -105,6 +105,10 @@ config.bind(
     "<Ctrl-Shift-l>",
     "cmd-set-text -s :spawn --userscript bitwarden.py;; command-accept",
 )
+c.aliases["zotero"] = "spawn --userscript zotero.py"
+config.bind("zo", "cmd-set-text -s :zotero;; command-accept")
+c.aliases["Zotero"] = "hint links userscript zotero.py"
+config.bind("zO", "cmd-set-text -s :Zotero;; command-accept")
 
 # privacy
 c.content.canvas_reading = False
