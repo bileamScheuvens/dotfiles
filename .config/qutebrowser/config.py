@@ -73,12 +73,19 @@ c.fonts.tabs.unselected = "8pt"
 
 
 # fonts
-c.fonts.default_family = []
+c.fonts.default_family = ["monospace"]
 c.fonts.default_size = "11pt"
 c.fonts.web.family.fixed = "monospace"
 c.fonts.web.family.sans_serif = "monospace"
 c.fonts.web.family.serif = "monospace"
 c.fonts.web.family.standard = "monospace"
+# force monospace, toggleable by keybind
+c.content.user_stylesheets = ["~/.config/qutebrowser/styles/force_monospace.css"]
+config.bind(
+    "tf",
+    "config-cycle content.user_stylesheets ~/.config/qutebrowser/styles/force_monospace.css ~/.config/qutebrowser/styles/default.css",
+)
+
 
 # set editor command
 c.editor.command = ["kitty", "-e", "nvim", "{}"]
