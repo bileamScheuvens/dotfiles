@@ -127,6 +127,9 @@ config.bind("zo", "cmd-set-text -s :zotero;; command-accept")
 c.aliases["Zotero"] = "hint links userscript zotero.py"
 config.bind("zO", "cmd-set-text -s :Zotero;; command-accept")
 
+# ads
+config.set("content.blocking.enabled", False, "https://www.youtube.com/*")
+
 # privacy
 c.content.canvas_reading = False
 c.content.geolocation = False

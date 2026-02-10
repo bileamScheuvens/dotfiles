@@ -237,5 +237,5 @@ if (isYouTubeVideo) {
 }
 
 window.setInterval(skipAd, 500)
-skipAd()
+// skipAd()
 
