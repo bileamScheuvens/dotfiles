@@ -1,4 +1,5 @@
-import catpuccin
+import os
+from urllib.request import urlopen
 
 # config object
 config = config  # noqa
@@ -6,7 +7,16 @@ config = config  # noqa
 c = c  # noqa
 
 # colorscheme
-catpuccin.setup(c, "mocha", False)
+if not os.path.exists(config.configdir / "theme.py"):
+    theme = "https://raw.githubusercontent.com/catppuccin/qutebrowser/main/setup.py"
+    with urlopen(theme) as themehtml:
+        with open(config.configdir / "theme.py", "w") as file:
+            file.writelines(themehtml.read().decode("utf-8"))
+
+if os.path.exists(config.configdir / "theme.py"):
+    import theme
+
+    theme.setup(c, "mocha", False)
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.preferred_color_scheme = "dark"
 
@@ -237,25 +247,16 @@ config.set(
 # Load images automatically in web pages.
 # Type: Bool
 config.set("content.images", True, "chrome-devtools://*")
-
-# Load images automatically in web pages.
-# Type: Bool
 config.set("content.images", True, "devtools://*")
 
 # Enable JavaScript.
 # Type: Bool
 config.set("content.javascript.enabled", True, "chrome-devtools://*")
-
-# Enable JavaScript.
-# Type: Bool
 config.set("content.javascript.enabled", True, "devtools://*")
 
 # Enable JavaScript.
 # Type: Bool
 config.set("content.javascript.enabled", True, "chrome://*/*")
-
-# Enable JavaScript.
-# Type: Bool
 config.set("content.javascript.enabled", True, "qute://*/*")
 
 # Allow locally loaded documents to access remote URLs.
