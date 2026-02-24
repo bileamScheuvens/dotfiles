@@ -27,7 +27,7 @@ c.url.searchengines = {
     "gh": "https://github.com/search?o=desc&q={}&s=stars",
     "yt": "https://www.youtube.com/results?search_query={}",
     "tr": "https://www.deepl.com/translator?share=generic#de/en/{}",
-    "nix": "https://search.nixos.org/packages?channel=unstable&query={}",
+    "nx": "https://search.nixos.org/packages?channel=unstable&query={}",
     "w": "https://en.wikipedia.org/wiki/{}",
     "wd": "https://de.wikipedia.org/wiki/{}",
     "song": "https://music.apple.com/de/search?term={}",
@@ -120,7 +120,8 @@ config.bind("Dx", "download-delete")
 # userscripts
 config.bind(
     "<Ctrl-Shift-l>",
-    "cmd-set-text -s :spawn --userscript bitwarden.py;; command-accept",
+    # "cmd-set-text -s :spawn --userscript bitwarden.py;; command-accept",
+    "cmd-set-text -s :spawn --userscript bitwarden_rbw.py ;; command-accept",
 )
 c.aliases["zotero"] = "spawn --userscript zotero.py"
 config.bind("zo", "cmd-set-text -s :zotero;; command-accept")
