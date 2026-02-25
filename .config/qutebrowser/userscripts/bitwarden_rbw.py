@@ -248,7 +248,7 @@ def main(arguments):
         # Nothing was selected, simply return
         if choice == "":
             return ExitCodes.SUCCESS
-        selected_idx = choice.split(":")[0]
+        selected_idx = int(choice.split(":")[0])
 
     username, domain = candidates[selected_idx].split("\t")
     password = get_password(domain, username, arguments.io_encoding)
