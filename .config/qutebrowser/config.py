@@ -17,7 +17,7 @@ if os.path.exists(config.configdir / "theme.py"):
     import theme
 
     theme.setup(c, "mocha", False)
-c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.enabled = False
 c.colors.webpage.preferred_color_scheme = "dark"
 
 
@@ -135,6 +135,9 @@ config.set("content.blocking.enabled", False, "https://www.youtube.com/*")
 c.content.canvas_reading = False
 c.content.geolocation = False
 c.content.webrtc_ip_handling_policy = "default-public-interface-only"
+
+
+c.content.javascript.clipboard = "access"
 
 c.auto_save.session = True
 
