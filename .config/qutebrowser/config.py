@@ -24,7 +24,8 @@ c.colors.webpage.preferred_color_scheme = "dark"
 c.url.searchengines = {
     # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
     "DEFAULT": "https://duckduckgo.com/?q={}",
-    "gh": "https://github.com/search?o=desc&q={}&s=stars",
+    "gh": "https://github.com/search?o=desc&q={}&s=stars&type=code",
+    "ghnx": "https://github.com/search?o=desc&q={}+language:nix&s=stars&type=code",
     "yt": "https://www.youtube.com/results?search_query={}",
     "tr": "https://www.deepl.com/translator?share=generic#de/en/{}",
     "nx": "https://search.nixos.org/packages?channel=unstable&query={}",
@@ -39,7 +40,6 @@ c.bindings.commands = {
     "insert": {
         "<Ctrl-f>": "fake-key <Right>",
         "<Ctrl-b>": "fake-key <Left>",
-        "<Ctrl-a>": "fake-key <Home>",
         "<Ctrl-e>": "fake-key <End>",
         "<Ctrl-n>": "fake-key <Down>",
         "<Ctrl-p>": "fake-key <Up>",
@@ -123,10 +123,16 @@ config.bind(
     # "cmd-set-text -s :spawn --userscript bitwarden.py;; command-accept",
     "cmd-set-text -s :spawn --userscript bitwarden_rbw.py ;; command-accept",
 )
+
 c.aliases["zotero"] = "spawn --userscript zotero.py"
 config.bind("zo", "cmd-set-text -s :zotero;; command-accept")
 c.aliases["Zotero"] = "hint links userscript zotero.py"
 config.bind("zO", "cmd-set-text -s :Zotero;; command-accept")
+
+config.bind("Dp", "cmd-set-text -s :spawn --userscript save_paper.py ;; command-accept")
+config.bind(
+    ";p", "cmd-set-text -s :hint links userscript save_paper.py ;; command-accept"
+)
 
 # ads
 config.set("content.blocking.enabled", False, "https://www.youtube.com/*")
