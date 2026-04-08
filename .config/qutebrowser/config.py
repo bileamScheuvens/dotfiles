@@ -26,6 +26,7 @@ c.url.searchengines = {
     "DEFAULT": "https://duckduckgo.com/?q={}",
     "gh": "https://github.com/search?o=desc&q={}&s=stars&type=code",
     "ghnx": "https://github.com/search?o=desc&q={}+language:nix&s=stars&type=code",
+    "mw": "https://www.merriam-webster.com/dictionary/{}",
     "yt": "https://www.youtube.com/results?search_query={}",
     "tr": "https://www.deepl.com/translator?share=generic#de/en/{}",
     "nx": "https://search.nixos.org/packages?channel=unstable&query={}",
@@ -57,7 +58,7 @@ c.bindings.commands = {
 
 # other keybinds
 config.bind("=", "cmd-set-text -s :open")
-config.bind("h", "history")
+config.bind("<Ctrl+h>", "history")
 config.bind("cs", "cmd-set-text -s :config-source;; command-accept")
 config.bind("ce", "cmd-set-text -s :config-edit;; command-accept")
 config.bind("T", "hint links tab")
