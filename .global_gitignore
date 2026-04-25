@@ -7,6 +7,12 @@
 # build artifacts
 __pycache__/
 *.pyc
+*.aux
+*.abs
+*.xmpi
+*.xmpdata
+*.synctex.gz
+
 
 # data
 *.csv
