@@ -12,6 +12,10 @@ __pycache__/
 *.xmpi
 *.xmpdata
 *.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
 
 
 # data
