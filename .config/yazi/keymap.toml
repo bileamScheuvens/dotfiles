@@ -1,4 +1,0 @@
-[[mgr.prepend_keymap]]
-on = ["g", "o"]
-run = "arrow top"
-desc = "Go to top"
