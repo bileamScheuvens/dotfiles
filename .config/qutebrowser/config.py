@@ -44,8 +44,6 @@ c.bindings.commands = {
         "<Ctrl-e>": "fake-key <End>",
         "<Ctrl-n>": "fake-key <Down>",
         "<Ctrl-p>": "fake-key <Up>",
-        "<Alt-v>": "fake-key <PgUp>",
-        "<Ctrl-v>": "fake-key <PgDown>",
         "<Alt-f>": "fake-key <Ctrl-Right>",
         "<Alt-b>": "fake-key <Ctrl-Left>",
         "<Ctrl-d>": "fake-key <Delete>",
@@ -69,6 +67,7 @@ config.bind("go", "scroll-to-perc 0")
 config.bind("tT", "config-cycle tabs.position top left")
 config.bind("gJ", "tab-move +")
 config.bind("gK", "tab-move -")
+config.bind("ge", "edit-url")
 config.bind("\\", "config-cycle tabs.show always switching")
 config.bind("|", "config-cycle tabs.show always switching")
 
