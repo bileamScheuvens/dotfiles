@@ -20,19 +20,47 @@
 
 """Userscript to download papers to specific folder."""
 
-from os import environ as e
+from os import environ
 import os
 from time import sleep
 
+import subprocess
+import shlex
+import sys
 from pdf2bib import pdf2bib
 import requests
 from urllib.parse import parse_qs, urlparse
 
-DOWNLOAD_DIR = os.path.join(os.path.expanduser("~"), "papers", "unsorted")
+ROOT = os.path.join(os.path.expanduser("~"), "papers")
 
 
-fifo = open(e["QUTE_FIFO"], "w")
+def get_folder():
+    folders = [p.name for p in os.scandir(ROOT) if not p.is_file()]
+    selection = (
+        subprocess.run(
+            shlex.split("fuzzel --dmenu -i"),
+            input="\n".join(folders).encode(),
+            stdout=subprocess.PIPE,
+        )
+        .stdout.decode()
+        .strip()
+    )
+    if not selection:
+        selection = "unsorted"
+    return selection
 
+
+def get_download_dir(set_dir=False):
+    if set_dir:
+        environ["PAPER_DOWNLOAD_DIR"] = get_folder()
+    if "PAPER_DOWNLOAD_DIR" in environ:
+        folder = environ["PAPER_DOWNLOAD_DIR"]
+    else:
+        folder = "unsorted"
+    return os.path.join(ROOT, folder)
+
+
+fifo = open(environ["QUTE_FIFO"], "w")
 
 # Qute stuff
 
@@ -46,11 +74,11 @@ def notify_error(message):
 
 
 def main():
-    if e["QUTE_MODE"] == "hints":
-        url = e["QUTE_URL"]
+    if environ["QUTE_MODE"] == "hints":
+        url = environ["QUTE_URL"]
     else:
         # extract pdf source from pdfjs url
-        url = parse_qs(urlparse(e["QUTE_URL"]).query)["source"][0]
+        url = parse_qs(urlparse(environ["QUTE_URL"]).query)["source"][0]
 
     response = requests.get(
         url,
@@ -59,6 +87,8 @@ def main():
         },
     )
     response.raise_for_status()
+    set_dir = "set_dir" in sys.argv
+    DOWNLOAD_DIR = get_download_dir(set_dir)
 
     tmppath = os.path.join(DOWNLOAD_DIR, "tmp.pdf")
     with open(tmppath, "wb") as f:
@@ -84,7 +114,7 @@ def main():
 
     os.rename(tmppath, outpath)
     # add to all bib
-    with open(os.path.join(DOWNLOAD_DIR, "unsorted.bib"), "a") as f:
+    with open(os.path.join(DOWNLOAD_DIR, "citation.bib"), "a") as f:
         f.write("\n")
         f.write(bibtex)
         f.write("\n")

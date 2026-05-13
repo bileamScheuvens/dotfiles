@@ -131,8 +131,13 @@ config.bind("zO", "cmd-set-text -s :Zotero;; command-accept")
 
 config.bind("Dp", "cmd-set-text -s :spawn --userscript save_paper.py ;; command-accept")
 config.bind(
+    "DP",
+    "cmd-set-text -s :spawn --userscript save_paper.py set_dir ;; command-accept",
+)
+config.bind(
     ";p", "cmd-set-text -s :hint links userscript save_paper.py ;; command-accept"
 )
+
 
 # ads
 config.set("content.blocking.enabled", False, "https://www.youtube.com/*")
