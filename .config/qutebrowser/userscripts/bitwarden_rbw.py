@@ -134,6 +134,7 @@ def authenticate(password_prompt_invocation):
     returncode = child.expect([pexpect.EOF, "Master Password:"])
     child.close()
     if returncode:
+        qute_command("message-error 'Wrong Password'")
         raise ValueError("Wrong Password")
 
 
@@ -234,7 +235,9 @@ def main(arguments):
             break
     else:
         if not candidates:
-            stderr("No pass candidates for URL {!r} found!".format(arguments.url))
+            err_msg = "No pass candidates for URL {!r} found!".format(arguments.url)
+            stderr(err_msg)
+            qute_command(f"message-error {err_msg}")
             return ExitCodes.NO_PASS_CANDIDATES
 
     if len(candidates) == 1:

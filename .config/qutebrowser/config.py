@@ -24,6 +24,7 @@ c.colors.webpage.preferred_color_scheme = "dark"
 c.url.searchengines = {
     # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
     "DEFAULT": "https://duckduckgo.com/?q={}",
+    "gg": "https://google.com/search?q={}",
     "gh": "https://github.com/search?o=desc&q={}&s=stars&type=code",
     "ghnx": "https://github.com/search?o=desc&q={}+language:nix&s=stars&type=code",
     "mw": "https://www.merriam-webster.com/dictionary/{}",
@@ -31,6 +32,7 @@ c.url.searchengines = {
     "tr": "https://www.deepl.com/translator?share=generic#de/en/{}",
     "nx": "https://search.nixos.org/packages?channel=unstable&query={}",
     "w": "https://en.wikipedia.org/wiki/{}",
+    "axv": "https://arxiv.org/search/?query={}&searchtype=all",
     "wd": "https://de.wikipedia.org/wiki/{}",
     "song": "https://music.apple.com/de/search?term={}",
     "ai": "https://duck.ai/?ia=chat&hps=1&start=1&duckai=1&home=1&q={}",
@@ -129,6 +131,7 @@ config.bind("zo", "cmd-set-text -s :zotero;; command-accept")
 c.aliases["Zotero"] = "hint links userscript zotero.py"
 config.bind("zO", "cmd-set-text -s :Zotero;; command-accept")
 
+config.bind("gc", "cmd-set-text -s :spawn --userscript clone_repo.py ;; command-accept")
 config.bind("Dp", "cmd-set-text -s :spawn --userscript save_paper.py ;; command-accept")
 config.bind(
     "DP",

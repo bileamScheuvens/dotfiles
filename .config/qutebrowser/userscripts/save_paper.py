@@ -20,6 +20,8 @@
 
 """Userscript to download papers to specific folder."""
 
+from random import randint
+
 from os import environ
 import os
 from time import sleep
@@ -29,9 +31,21 @@ import shlex
 import sys
 from pdf2bib import pdf2bib
 import requests
+import json
 from urllib.parse import parse_qs, urlparse
 
 ROOT = os.path.join(os.path.expanduser("~"), "papers")
+CFG_FILE = os.path.join(os.path.dirname(__file__), ".save_paper_cfg.json")
+
+
+def read_cfg():
+    with open(CFG_FILE) as f:
+        return json.loads(f.read())
+
+
+def write_cfg(cfg):
+    with open(CFG_FILE, "w") as f:
+        return f.write(json.dumps(cfg))
 
 
 def get_folder():
@@ -50,14 +64,11 @@ def get_folder():
     return selection
 
 
-def get_download_dir(set_dir=False):
-    if set_dir:
-        environ["PAPER_DOWNLOAD_DIR"] = get_folder()
-    if "PAPER_DOWNLOAD_DIR" in environ:
-        folder = environ["PAPER_DOWNLOAD_DIR"]
-    else:
-        folder = "unsorted"
-    return os.path.join(ROOT, folder)
+def set_download_dir():
+    cfg = read_cfg()
+    folder = get_folder()
+    cfg["PAPER_DOWNLOAD_DIR"] = folder
+    write_cfg(cfg)
 
 
 fifo = open(environ["QUTE_FIFO"], "w")
@@ -87,14 +98,17 @@ def main():
         },
     )
     response.raise_for_status()
-    set_dir = "set_dir" in sys.argv
-    DOWNLOAD_DIR = get_download_dir(set_dir)
+
+    if "set_dir" in sys.argv:
+        set_download_dir()
+    cfg = read_cfg()
+    DOWNLOAD_DIR = os.path.join(ROOT, cfg["PAPER_DOWNLOAD_DIR"])
 
     tmppath = os.path.join(DOWNLOAD_DIR, "tmp.pdf")
     with open(tmppath, "wb") as f:
         f.write(response.content)
     # short timeout to ensure file is closed
-    sleep(0.2)
+    sleep(0.1)
 
     pdf_info = pdf2bib(tmppath)
     bibtex = pdf_info["bibtex"]
@@ -103,7 +117,7 @@ def main():
     # ^^^^^^^^^^^^^^^
     if bibtex is None:
         notify("Skipping, doi extraction failed")
-        os.remove(tmppath)
+        os.rename(tmppath, f"unknown_{randint(1000, 9999)}.pdf")
         return
     bibtex_id = bibtex.split("{")[1].split(",")[0]
     outpath = os.path.join(DOWNLOAD_DIR, f"{bibtex_id}.pdf")
@@ -118,7 +132,7 @@ def main():
         f.write("\n")
         f.write(bibtex)
         f.write("\n")
-    notify(f"Added entry {bibtex_id}")
+    notify(f"Added entry {bibtex_id} to {DOWNLOAD_DIR}")
 
     # if e["QUTE_MODE"] == "hints":
     #     if "QUTE_USER_AGENT" in e:
