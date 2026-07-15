@@ -146,7 +146,7 @@ config.bind(
 config.set("content.blocking.enabled", False, "https://www.youtube.com/*")
 
 # privacy
-c.content.canvas_reading = False
+c.content.canvas_reading = True # needed for cloudflare
 c.content.geolocation = False
 c.content.webrtc_ip_handling_policy = "default-public-interface-only"
 

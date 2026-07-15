@@ -24,6 +24,7 @@ from random import randint
 
 from os import environ
 import os
+from pathlib import Path
 from time import sleep
 
 import subprocess
@@ -34,8 +35,8 @@ import requests
 import json
 from urllib.parse import parse_qs, urlparse
 
-ROOT = os.path.join(os.path.expanduser("~"), "papers")
-CFG_FILE = os.path.join(os.path.dirname(__file__), ".save_paper_cfg.json")
+ROOT = Path.home() / "papers"
+CFG_FILE = Path(__file__).parent / ".save_paper_cfg.json"
 
 
 def read_cfg():
@@ -102,9 +103,9 @@ def main():
     if "set_dir" in sys.argv:
         set_download_dir()
     cfg = read_cfg()
-    DOWNLOAD_DIR = os.path.join(ROOT, cfg["PAPER_DOWNLOAD_DIR"])
+    DOWNLOAD_DIR = ROOT / cfg["PAPER_DOWNLOAD_DIR"]
 
-    tmppath = os.path.join(DOWNLOAD_DIR, "tmp.pdf")
+    tmppath = DOWNLOAD_DIR / "tmp.pdf"
     with open(tmppath, "wb") as f:
         f.write(response.content)
     # short timeout to ensure file is closed
@@ -117,35 +118,22 @@ def main():
     # ^^^^^^^^^^^^^^^
     if bibtex is None:
         notify("Skipping, doi extraction failed")
-        os.rename(tmppath, f"unknown_{randint(1000, 9999)}.pdf")
+        os.rename(tmppath, ROOT / f"unknown_{randint(1000, 9999)}.pdf")
         return
     bibtex_id = bibtex.split("{")[1].split(",")[0]
-    outpath = os.path.join(DOWNLOAD_DIR, f"{bibtex_id}.pdf")
-    if os.path.exists(outpath):
+    outpath = DOWNLOAD_DIR / f"{bibtex_id}.pdf"
+    if outpath.is_file():
         notify(f"Skipping, {bibtex_id} entry already exists")
         os.remove(tmppath)
         return
 
     os.rename(tmppath, outpath)
     # add to all bib
-    with open(os.path.join(DOWNLOAD_DIR, "citation.bib"), "a") as f:
+    with (DOWNLOAD_DIR / "citation.bib").open("a") as f:
         f.write("\n")
         f.write(bibtex)
         f.write("\n")
     notify(f"Added entry {bibtex_id} to {DOWNLOAD_DIR}")
-
-    # if e["QUTE_MODE"] == "hints":
-    #     if "QUTE_USER_AGENT" in e:
-    #         r = get(url, headers={"User-Agent": e["QUTE_USER_AGENT"]})
-    #     else:
-    #         r = get(url, headers={})
-    #     html = r.text
-    #
-    # else:  # I guess this must be command mode
-    #     fd = open(e["QUTE_HTML"])
-    #     html = fd.read()
-    #     fd.close()
-    #
 
 
 if __name__ == "__main__":
