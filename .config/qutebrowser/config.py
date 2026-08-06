@@ -23,8 +23,7 @@ c.colors.webpage.preferred_color_scheme = "dark"
 
 c.url.searchengines = {
     # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
-    "DEFAULT": "https://duckduckgo.com/?q={}",
-    "gg": "https://google.com/search?q={}",
+    "DEFAULT": "https://google.com/search?q={}",
     "gh": "https://github.com/search?o=desc&q={}&s=stars&type=code",
     "ghnx": "https://github.com/search?o=desc&q={}+language:nix&s=stars&type=code",
     "mw": "https://www.merriam-webster.com/dictionary/{}",
@@ -146,7 +145,7 @@ config.bind(
 config.set("content.blocking.enabled", False, "https://www.youtube.com/*")
 
 # privacy
-c.content.canvas_reading = True # needed for cloudflare
+c.content.canvas_reading = True  # needed for cloudflare
 c.content.geolocation = False
 c.content.webrtc_ip_handling_policy = "default-public-interface-only"
 

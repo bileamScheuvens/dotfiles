@@ -118,7 +118,7 @@ def main():
     # ^^^^^^^^^^^^^^^
     if bibtex is None:
         notify("Skipping, doi extraction failed")
-        os.rename(tmppath, ROOT / f"unknown_{randint(1000, 9999)}.pdf")
+        os.rename(tmppath, DOWNLOAD_DIR / f"unknown_{randint(1000, 9999)}.pdf")
         return
     bibtex_id = bibtex.split("{")[1].split(",")[0]
     outpath = DOWNLOAD_DIR / f"{bibtex_id}.pdf"
