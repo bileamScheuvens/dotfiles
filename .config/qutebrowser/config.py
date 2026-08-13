@@ -78,7 +78,7 @@ c.tabs.padding = {"bottom": 3, "top": 3, "left": 0, "right": 0}
 c.tabs.position = "right"
 c.tabs.width = "15%"
 c.tabs.show = "switching"
-c.tabs.show_switching_delay = 1500
+c.tabs.show_switching_delay = 500
 c.fonts.tabs.selected = "10pt"
 c.fonts.tabs.unselected = "8pt"
 
