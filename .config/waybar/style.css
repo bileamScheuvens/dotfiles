@@ -2,7 +2,7 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: JetBrainsMono Nerd Font;
+  font-family: Fira Code;
   font-size: 12px;
 }
 
@@ -58,6 +58,8 @@ window#waybar.hidden {
 #custom-vpn_toggle,
 #clock,
 #battery,
+#window,
+#layout,
 #tray {
   border-radius: 6px;
   margin: 3px 1px;
@@ -127,4 +129,70 @@ tooltip {
 tooltip label {
   padding: 5px;
   background-color: #131822;
+}
+
+
+/* copied from mangowm docs */
+#workspaces {
+  border-color: #c9b890;
+  background: rgba(40, 40, 40, 0.76);
+}
+
+#workspaces button {
+  background: none;
+  color: #ddca9e;
+}
+
+#workspaces button.hidden {
+  color: #9e906f;
+  background-color: transparent;
+}
+
+#workspaces button.visible {
+  color: #ddca9e;
+}
+
+#workspaces button:hover {
+  color: #d79921;
+}
+
+#workspaces button.active {
+  background-color: #ddca9e;
+  color: #282828;
+}
+
+#workspaces button.urgent {
+  background-color: #ef5e5e;
+  color: #282828;
+}
+
+#workspaces button.overview {
+  background-color: #ef5e5e;
+  color: #282828;
+}
+
+#window {
+  background-color: #CA9297;
+  color: #282828;
+}
+
+window#waybar.empty #window {
+    background: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#layout {
+  background-color: #CA9297;
+  color: #282828;
+}
+
+#language {
+  background-color: #CA9297;
+  color: #282828;
+}
+
+#keymode {
+  background-color: #CA9297;
+  color: #282828;
 }

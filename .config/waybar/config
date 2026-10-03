@@ -7,11 +7,12 @@
     "spacing": 2, // Gaps between modules (4px)
                   // Choose the order of the modules
     "modules-left": [
-      "hyprland/workspaces",
-    "hyprland/window",
+      "mango/workspaces",
+      "mango/layout",
+      "mango/window",
     ],
     "modules-center": [
-      "clock",
+      "clock"
     ],
     "modules-right": [
       "temperature",
@@ -24,7 +25,7 @@
       //"keyboard-state",
       //"sway/language",
       "tray",
-      "battery",
+      "battery"
     ],
     // Modules configuration
     "hyprland/workspaces": {
@@ -155,5 +156,31 @@
       "interval": 0,
       "signal": 1,
       "on-click": "~/scripts/toggle_vpn.sh"
+
+    },
+    "mango/workspaces": {
+        "format": "{icon}",
+        "hide-empty": true,
+        "on-click": "activate",
+        "on-click-right": "toggle",
+        "overview-label": "OVERVIEW"
+      },
+      "mango/keymode": {
+        "format": "{}"
+        // "format-default": " Default",
+        // "format-test": " Test",
+      },
+      "mango/window": {
+        "format": "{}",
+        "icon-size": 20
+      },
+      "mango/layout": {
+          "format": "{}"
+          // "format-S": "Scroller",
+          // "format-T": "Tile",
+      },
+      "mango/language": {
+      "format": "{short}"
+      }
     }
 }
